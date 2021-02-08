@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RealPage.RealEstateProperties.Data\RealPage.RealEstateProperties.Data.csproj" />
+    <ProjectReference Include="..\RealPage.RealEstateProperties.Entity\RealPage.RealEstateProperties.Entity.csproj" />
+  </ItemGroup>
+
+</Project>
