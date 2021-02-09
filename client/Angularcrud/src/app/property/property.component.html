@@ -1,0 +1,125 @@
+<div class="container">
+
+<mat-card>
+  <mat-toolbar color="accent">
+    <div align="center" style="color:white;text-align: right;">
+      Real Page - Real State Properties
+    </div>
+
+  </mat-toolbar>
+<br><br>
+  <mat-card-content>
+    <form [formGroup]="propertyForm" (ngSubmit)="onFormSubmit(propertyForm.value)">
+
+            <table>
+              <tr>
+                <td class="tbl1">
+                  <mat-form-field class="demo-full-width">
+                    <input formControlName="Name" matTooltip="Enter Property Name" matInput placeholder="Property Name">
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!propertyForm.get('Name').value && propertyForm.get('Name').touched"></span>
+                  </mat-error>
+                </td>
+                <td class="tbl1">
+                  <mat-form-field class="demo-full-width">
+                    <input formControlName="Description" matTooltip="Enter Description" matInput placeholder="Description">
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!propertyForm.get('Description').value && propertyForm.get('Description').touched"></span>
+                  </mat-error>
+                </td>
+                <td class="tbl1">
+                  <mat-form-field class="demo-full-width">
+                    <input matTooltip="Enter Address" formControlName="Address" matInput placeholder="Address">
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!propertyForm.get('Address').value && propertyForm.get('Address').touched"></span>
+                  </mat-error>
+                </td>
+              <tr>
+                <td class="tbl1">
+                  <mat-form-field class="demo-full-width">
+                    <input matTooltip="Enter Owner" formControlName="Owner" matInput placeholder="Owner">
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!propertyForm.get('Owner').value && propertyForm.get('Owner').touched"></span>
+                  </mat-error>
+                </td>
+                <td class="tbl1">
+                  <mat-form-field class="demo-full-width">
+                    <input type="number" formControlName="RoomCount" (keypress)="numberOnly($event)" matTooltip="Enter Room Count" matInput placeholder="Room Count">
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!propertyForm.get('RoomCount').value && propertyForm.get('RoomCount').touched"></span>
+                  </mat-error>
+                </td>
+                <td class="tbl1">
+                  <mat-form-field class="demo-full-width">
+                    <input matInput [matDatepicker]="picker" matTooltip="Enter Date On Market" formControlName="DateOnMarket" placeholder="Choose Date On Market">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!propertyForm.get('DateOnMarket').value && propertyForm.get('DateOnMarket').touched"></span>
+                  </mat-error>
+                </td>
+              </tr>
+              <tr>
+              <td class="tbl1">
+                <mat-form-field class="demo-full-width">
+                  <mat-select matTooltip="Enter Property Type" formControlName="PropertyTypeId" placeholder="Choose Property Type">
+                    <mat-option *ngFor="let p of allPropertyTypes" [value]="p.PropertyTypeId">
+                      {{p.Description}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error>
+                  <span *ngIf="!propertyForm.get('PropertyTypeId').value && propertyForm.get('PropertyTypeId').touched"></span>
+                </mat-error>
+              </td>
+            </tr>
+              <tr>
+                <td></td>
+                <td class="content-center">
+                  <button type="submit" mat-raised-button color="accent" matTooltip="Click Submit Button" [disabled]="!propertyForm.valid">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button type="reset" mat-raised-button color="accent" matTooltip="Click Reset Button" (click)="resetForm()">Reset</button>
+                </td>
+                <td>
+                  <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">
+                    {{massage}}
+                  </p>
+                </td>
+              </tr>
+            </table>
+<br><br>
+      <table class="table" >
+          <tr ngclass="btn-primary">
+            <th class="tbl2">Name</th>
+            <th class="tbl2">Description</th>
+            <th class="tbl2">Address</th>
+            <th class="tbl2">Owner</th>
+            <th class="tbl2">Room Count</th>
+            <th class="tbl2">Date On Market</th>
+            <th class="tbl2">Edit</th>
+            <th class="tbl2">Delete</th>
+          </tr>
+          <tr *ngFor="let property of allProperties">
+            <td class="tbl2">{{property.Name}}</td>
+            <td class="tbl2">{{property.Description}}</td>
+            <td class="tbl2">{{property.Address}}</td>
+            <td class="tbl2">{{property.Owner}}</td>
+            <td class="tbl2">{{property.RoomCount}}</td>
+            <td class="tbl2">{{property.DateOnMarket | date }}</td>
+            <td class="tbl2">
+              <button type="button" class="btn btn-info" matTooltip="Click Edit Button" (click)="loadPropertyToEdit(property.PropertyId)">Edit</button>
+            </td>
+            <td class="tbl2">
+              <button type="button" class="btn btn-danger" matTooltip="Click Delete Button" (click)="deleteProperty(property.PropertyId)">Delete</button>
+            </td>
+          </tr>
+        </table>
+    </form>
+  </mat-card-content>
+</mat-card>
+</div>

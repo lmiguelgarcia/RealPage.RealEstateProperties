@@ -10,6 +10,7 @@ using RealPage.RealEstateProperties.Data.Context;
 using RealPage.RealEstateProperties.Data.Context.Interfaces;
 using RealPage.RealEstateProperties.Data.Repositories;
 using RealPage.RealEstateProperties.Data.Repositories.Interfaces;
+using System.Text.Json;
 
 namespace RealPage.RealEstateProperties.API
 {
@@ -25,7 +26,7 @@ namespace RealPage.RealEstateProperties.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             #region Swagger Dependencies
             services.AddSwaggerGen(swagger =>
             {
@@ -45,6 +46,12 @@ namespace RealPage.RealEstateProperties.API
             services.AddTransient<IPropertyRepository, PropertyRepository>();
             services.AddTransient<IPropertyBusiness, PropertyBusiness>();
             #endregion
+            #region Cors
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4210").AllowAnyMethod().AllowAnyHeader();
+            }));
+            #endregion           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +61,7 @@ namespace RealPage.RealEstateProperties.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("ApiCorsPolicy");
 
             app.UseRouting();
 
@@ -70,7 +78,7 @@ namespace RealPage.RealEstateProperties.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
 
-            });
+            });            
         }
     }
 }
