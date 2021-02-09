@@ -4,13 +4,14 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { Property } from './property';
-
+import{ GlobalConstants } from './app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
-  url = 'http://localhost:54433/api/v1/Property';
+  url = GlobalConstants.apiURL + '/Property';
+
   constructor(private http: HttpClient) { }
   getAllProperties(): Observable<Property[]> {
     return this.http.get<Property[]>(this.url + '/GetProperties');
